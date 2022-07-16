@@ -64,9 +64,16 @@ public class Brainfuck {
                     break;
 
                 case OUTPUT:
+                    System.out.print((char) memory[ptr]);
                     break;
 
                 case INPUT:
+                    try {
+                        memory[ptr] = System.in.read();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
                     break;
 
                 default:
