@@ -39,17 +39,13 @@ public class Brainfuck {
 
         while (codePtr < codeLen) {
             switch (code.charAt(codePtr)) {
-                case INCREMENT -> {
-                }
+                case INCREMENT -> memory[ptr] = (memory[ptr] >= 255) ? 0 : memory[ptr] + 1;
 
-                case DECREMENT -> {
-                }
+                case DECREMENT -> memory[ptr] = (memory[ptr] <= 0) ? 255 : memory[ptr] - 1;
 
-                case RIGHT -> {
-                }
+                case RIGHT -> ptr = (ptr >= MEMORY_SIZE - 1) ? 0 : ptr + 1;
 
-                case LEFT -> {
-                }
+                case LEFT -> ptr = (ptr <= 0) ? MEMORY_SIZE - 1 : ptr - 1;
 
                 case LOOP_START -> {
                 }
