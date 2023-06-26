@@ -3,6 +3,8 @@ package ga.blueprint.brainfuck;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Brainfuck {
     static final char INCREMENT = '+';
@@ -21,6 +23,8 @@ public class Brainfuck {
         int ptr = 0;
         String code = "";
         int codePtr = 0;
+
+        Deque<Integer> loops = new ArrayDeque<>();
 
         if (args.length == 0) {
             System.err.println("Error: A Brainfuck code is not passed as a command-line argument.");
@@ -48,9 +52,32 @@ public class Brainfuck {
                 case LEFT -> ptr = (ptr <= 0) ? MEMORY_SIZE - 1 : ptr - 1;
 
                 case LOOP_START -> {
+                    loops.push(codePtr);
+                    if (memory[ptr] == 0) {
+                        int depth = 1;
+                        while (depth > 0) {
+                            codePtr++;
+                            if (codePtr >= codeLen) {
+                                System.err.println("Error: Loop end order, " + LOOP_END + ", is not found.");
+                                System.exit(1);
+                            }
+                            if (code.charAt(codePtr) == LOOP_START) {
+                                depth++;
+                            }
+                            if (code.charAt(codePtr) == LOOP_END) {
+                                depth--;
+                            }
+                        }
+                        loops.pop();
+                    }
                 }
 
                 case LOOP_END -> {
+                    if (loops.isEmpty()) {
+                        System.err.println("Error: Loop start order, " + LOOP_START + ", is not found.");
+                        System.exit(1);
+                    }
+                    codePtr = loops.pop() - 1;
                 }
 
                 case OUTPUT -> System.out.print((char) memory[ptr]);
