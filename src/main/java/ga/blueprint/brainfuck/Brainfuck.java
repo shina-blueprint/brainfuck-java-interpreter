@@ -53,10 +53,15 @@ public class Brainfuck {
                 case LOOP_END -> {
                 }
 
-                case OUTPUT -> {
-                }
+                case OUTPUT -> System.out.print((char) memory[ptr]);
 
                 case INPUT -> {
+                    try {
+                        memory[ptr] = System.in.read();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.exit(1);
+                    }
                 }
 
                 default -> {
