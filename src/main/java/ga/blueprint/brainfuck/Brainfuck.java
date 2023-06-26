@@ -37,7 +37,37 @@ public class Brainfuck {
 
         int codeLen = code.length();
 
-        System.out.println(codeLen + " Byte.");
-        System.out.println(code);
+        while (codePtr < codeLen) {
+            switch (code.charAt(codePtr)) {
+                case INCREMENT -> {
+                }
+
+                case DECREMENT -> {
+                }
+
+                case RIGHT -> {
+                }
+
+                case LEFT -> {
+                }
+
+                case LOOP_START -> {
+                }
+
+                case LOOP_END -> {
+                }
+
+                case OUTPUT -> {
+                }
+
+                case INPUT -> {
+                }
+
+                default -> {
+                }
+            }
+
+            codePtr++;
+        }
     }
 }
